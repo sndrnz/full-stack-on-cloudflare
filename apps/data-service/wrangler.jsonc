@@ -13,6 +13,9 @@
 	"observability": {
 		"enabled": true,
 	},
+	"browser": {
+		"binding": "VIRTUAL_BROWSER"
+	},
 	"d1_databases": [
 		{
 			"binding": "DB",
@@ -32,6 +35,10 @@
 			{
 				"queue": "smart-links-data-queue-stage",
 				"dead_letter_queue": "smart-links-data-dead-letter-stage"
+			},
+			{
+				"queue": "smart-links-data-dead-letter-stage",
+				"retry_delay": 0
 			}
 		],
 		"producers": [
@@ -39,6 +46,22 @@
 				"binding": "QUEUE",
 				"queue": "smart-links-data-queue-stage",
 			}
-		]
-	}
+		],
+	},
+	"workflows": [
+		{
+			"binding": "DESTINATION_EVALUATION_WORKFLOW",
+			"name": "destination-evaluation-workflow",
+			"class_name": "DestinationEvaluationWorkflow",
+		}
+	],
+	"ai": {
+		"binding": "AI"
+	},
+	"r2_buckets": [
+		{
+			"binding": "BUCKET",
+			"bucket_name": "smart-links-eval-stage",
+		}
+	]
 }
